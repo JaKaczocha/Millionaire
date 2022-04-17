@@ -4,4 +4,8 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
+        cMillionaireData.cpp \
         main.cpp
+
+HEADERS += \
+    cMillionaire.h
