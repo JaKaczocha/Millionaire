@@ -1,9 +1,8 @@
-#include <iostream>
-
-using namespace std;
+#include "cMillionaire.h"
 
 int main()
 {
-    cout << "Hello World!" << endl;
+    cMillionaire millionaireGame;
+    millionaireGame.loadData();
     return 0;
 }
