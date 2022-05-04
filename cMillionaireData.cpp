@@ -1,6 +1,5 @@
 #include <fstream>
 #include <stdexcept>
-#include <algorithm>
 #include "cMillionaire.h"
 
 bool cMillionaire::loadData()
@@ -25,7 +24,7 @@ void cMillionaire::readFile()
     const string folder = "../millionaire/stages/", extension = ".csv";  // <---------- ZMIENIC FOLDER - po clone bedzie inna nazwa
     string fPath{};
 
-    for (unsigned i = 0, fileNum = 1; i < STAGE_COUNT; i++, fileNum++)
+    for (unsigned i = 0, fileNum = 1; i < 1; i++, fileNum++)
     {
         fPath = folder + to_string(fileNum) + extension;
 
@@ -57,15 +56,15 @@ void cMillionaire::readFile()
         file.close();
 
     }
-    for (int etap = 0; etap < STAGE_COUNT; etap++)
-    {
-        cout << "Etap " << etap << '\n';
-        for (int linia = 0; linia < vData[etap].size(); linia++)
-        {
-            cout << vData[etap][linia]["QUESTION"] << "\n";
-        }
-        cout << '\n';
-    }
+//    for (int etap = 0; etap < STAGE_COUNT; etap++)
+//    {
+//        cout << "Etap " << etap << '\n';
+//        for (int linia = 0; linia < vData[etap].size(); linia++)
+//        {
+//            cout << vData[etap][linia]["QUESTION"] << "\n";
+//        }
+//        cout << '\n';
+//    }
 
 
 }
@@ -95,6 +94,8 @@ void cMillionaire::saveLine(string line, vector<stageData>& vData)
     bool isQuotePresent = 0;
 
     vData.emplace_back();
+
+    return;
 
     for (int i = 0; i < COL_COUNT; i++)
     {
