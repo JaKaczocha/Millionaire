@@ -6,6 +6,10 @@ int main()
     system("cls");
 
     cMillionaire millionaireGame;
-    millionaireGame.loadData();
+    if (millionaireGame.loadData())
+        return 1;
+
+
+    millionaireGame.printStageContent();
     return 0;
 }

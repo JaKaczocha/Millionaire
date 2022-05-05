@@ -4,37 +4,24 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "cStageData.h"
 
 using namespace std;
 
-class cMillionaire
+class cMillionaire : public stageData
 {
 public:
     cMillionaire();
     bool loadData();
+    void printStageContent();
 private:
-    // Static const members can be initialize in header file of class.
-    static const int ANSWER_COUNT = 4, STAGE_COUNT = 15, COL_COUNT = 7;
+    static const int STAGE_COUNT = 15;
     static const char COMMA = ',';
 
-    static const string H_TXT[COL_COUNT];
-
-    // Data handling
-    class stageData
-    {
-    public:
-        stageData();
-        string& operator[](const string& key);
-        string& operator[](const int index);
-    private:
-        string headerData[COL_COUNT];
-        string errorMsg;
-    };
-
-    vector<stageData> vData[STAGE_COUNT]; // Tablica 15 wektorow dla kazdego etapu
+    vector<stageData> vData[STAGE_COUNT]; // <- Main data structure
 
     void readFile();
-    bool checkHeader(string line);
+    bool headerIsGood(string line);
     void saveLine(string line, vector<stageData>& vData);
 
 };
