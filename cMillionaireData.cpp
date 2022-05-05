@@ -21,7 +21,7 @@ bool cMillionaire::loadData()
 void cMillionaire::readFile()
 {
     ifstream file; // Domyslnie ustawiona zmienna do odczytu
-    const string folder = "../millionaire/stages/", extension = ".csv";  // <---------- ZMIENIC FOLDER - po clone bedzie inna nazwa
+    const string folder = "../project_07_35244/stages/", extension = ".csv";  // <---------- ZMIENIC FOLDER - po clone bedzie inna nazwa
     string fPath{};
 
     for (unsigned i = 0, fileNum = 1; i < STAGE_COUNT; i++, fileNum++)
