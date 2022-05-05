@@ -14,6 +14,7 @@ public:
     cMillionaire();
     bool loadData();
     void printStageContent();
+
 private:
     static const int STAGE_COUNT = 15;
     static const char COMMA = ',';
