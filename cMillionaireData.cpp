@@ -1,6 +1,8 @@
 #include <fstream>
 #include <stdexcept>
+#include <algorithm>
 #include "cMillionaire.h"
+
 
 bool cMillionaire::loadData()
 {
