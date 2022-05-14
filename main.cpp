@@ -12,7 +12,10 @@ int main()
         return 1;
 
 
-    millionaireGame.printStageContent();
+
+    millionaireGame.GameFlow(millionaireGame);
+
+
     return 0;
 }
 

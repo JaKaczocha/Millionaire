@@ -6,20 +6,29 @@
 #include <vector>
 #include "cStageData.h"
 
+
 using namespace std;
 
 class cMillionaire : public stageData
 {
+
 public:
+    int GameFlow(cMillionaire &);//l
     cMillionaire();
     bool loadData();
     void printStageContent();
-
+    void SelectQuestion(int ); //.
+    void DisplayQuestion(int);//.
+    void DisplayAnswer(int);//.
 private:
     static const int STAGE_COUNT = 15;
     static const char COMMA = ',';
 
+
+
     vector<stageData> vData[STAGE_COUNT]; // <- Main data structure
+
+    int selectedQuestion; //.
 
     void readFile();
     bool headerIsGood(string line);

@@ -6,6 +6,7 @@ CONFIG -= qt
 SOURCES += \
         cMillionaire.cpp \
         cMillionaireData.cpp \
+        cMillionaireDisplay.cpp \
         cStageData.cpp \
         main.cpp
 

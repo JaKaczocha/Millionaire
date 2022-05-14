@@ -112,12 +112,13 @@ void cMillionaire::printStageContent()
         for (int linia = 0; linia < vData[etap].size(); linia++)
         {
             // Mozna tez
-            cout << vData[etap][linia]["question"];
+            //cout << vData[etap][linia]["question"];
             for (int naglowek = 0; naglowek < COL_COUNT; naglowek++)
             {
-                //cout << vData[etap][linia][naglowek] << "  ";
+                cout << vData[etap][linia][naglowek] << "  ";
             }
             cout << '\n';
         }
     }
 }
+

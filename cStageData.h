@@ -5,6 +5,7 @@
 
 class stageData
 {
+
 public:
     stageData();
     std::string& operator[](const std::string& key);
