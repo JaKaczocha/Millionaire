@@ -3,6 +3,7 @@
 #include <algorithm>
 #include "cMillionaire.h"
 
+const char cMillionaire::COMMA = ',';
 
 bool cMillionaire::loadData()
 {

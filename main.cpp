@@ -1,17 +1,17 @@
 #include "cMillionaire.h"
 
-void clearScreen();
+//void clearScreen();
 
 int main()
 {
     system("chcp 65001"); // Encoding utf-8
-    clearScreen();
+
 
     cMillionaire millionaireGame;
     if (millionaireGame.loadData())
         return 1;
 
-
+    millionaireGame.clearScreen();
 
     millionaireGame.GameFlow(millionaireGame);
 
@@ -19,7 +19,7 @@ int main()
     return 0;
 }
 
-void clearScreen()
+/*void clearScreen()
 {
 #if defined _WIN32
     system("cls");
@@ -30,4 +30,4 @@ void clearScreen()
 #elif defined (__APPLE__)
     system("clear");
 #endif
-}
+}*/
