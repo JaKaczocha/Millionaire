@@ -114,7 +114,7 @@ void cMillionaire::DisplayAnswer(int stage,char answer)
     }
 }
 
-void cMillionaire::EnterAnswer()
+void cMillionaire::EnterAnswer(int stage)
 {
 
     do
@@ -123,6 +123,9 @@ void cMillionaire::EnterAnswer()
         cin>>answer;
     }while(answer!='a'&&answer!='b'&&answer!='c'&&answer!='d'
            &&answer!='A'&&answer!='B'&&answer!='C'&&answer!='D');
+    clearScreen();
+    DisplayQuestion(stage);
+    DisplayAnswer(stage,answer);
 
 }
 void cMillionaire::clearScreen()

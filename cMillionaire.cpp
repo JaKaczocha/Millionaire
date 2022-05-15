@@ -47,11 +47,11 @@ int cMillionaire::GameFlow(cMillionaire &millionaireGame)
         millionaireGame.SelectQuestion(i);
         millionaireGame.DisplayQuestion(i);
         millionaireGame.DisplayAnswer(i);
-        millionaireGame.EnterAnswer();
-        clearScreen();
+        millionaireGame.EnterAnswer(i);
+
         cout<<"etap "<<i+1<<endl;
-        millionaireGame.DisplayQuestion(i);
-        millionaireGame.DisplayAnswer(i,answer);
+        //millionaireGame.DisplayQuestion(i);
+        // millionaireGame.DisplayAnswer(i,answer);
         if(!millionaireGame.CheckingAnswer(i))
         {
 
@@ -59,6 +59,7 @@ int cMillionaire::GameFlow(cMillionaire &millionaireGame)
             break;
         }
         getchar();
+
         if(i==STAGE_COUNT-1)
         {
             cout<<"\nPOPRAWNA ODPOWIEDŹ!\nJESTEŚ ZWYCIĘZCĄ!\n";

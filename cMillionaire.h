@@ -22,7 +22,7 @@ public:
     void DisplayQuestion(int);//.
     void DisplayAnswer(int);//.
     void DisplayAnswer(int,char);//.
-    void EnterAnswer();//.
+    void EnterAnswer(int);//.
     bool CheckingAnswer(int);//.
     void clearScreen();//.
 private:
