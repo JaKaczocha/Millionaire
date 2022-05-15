@@ -17,7 +17,7 @@ public:
 
 private:
     static const int STAGE_COUNT = 15;
-    static const char COMMA = ',';
+    static const char COMMA;
 
     vector<stageData> vData[STAGE_COUNT]; // <- Main data structure
 
