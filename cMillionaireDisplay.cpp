@@ -1,5 +1,6 @@
-#include "cMillionaire.h"
 #include <windows.h>//.
+#include "cMillionaire.h"
+
 
 
 
@@ -63,7 +64,7 @@ void cMillionaire::DisplayAnswer(int stage,char answer)
             {
                 SetConsoleTextAttribute( hOut, FOREGROUND_GREEN );
             }
-            else if(!(vData[stage][selectedQuestion][COL_COUNT-1]=="1")&&(answer=='a'||answer=='A'))
+            else if(!(vData[stage][selectedQuestion]["CORRECT_ANSWER"]=="1")&&(answer=='a'||answer=='A'))
             {
                 SetConsoleTextAttribute( hOut, FOREGROUND_RED );
             }

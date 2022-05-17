@@ -7,6 +7,7 @@ stageData::stageData() : nKey("")
 
 std::string& stageData::operator[](const std::string& key)
 {
+    nKey="";
     for (int i = 0; key[i]; i++)
         nKey += toupper(key[i]);
 

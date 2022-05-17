@@ -120,6 +120,7 @@ void cMillionaire::printStageContent()
             }
             cout << '\n';
         }
+
     }
 }
 
