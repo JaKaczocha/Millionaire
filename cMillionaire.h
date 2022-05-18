@@ -4,27 +4,26 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
 #include "cStageData.h"
+//#include "cmillionairedisplaying.h"
 
+class cMillionaireDisplaying;
 
 using namespace std;
 
+
+
 class cMillionaire : public stageData
 {
-
+    friend class cMillionaireDisplaying;
 public:
-    int GameFlow(cMillionaire &);//l
+
     cMillionaire();
     bool loadData();
     void printStageContent();
-    void SelectQuestion(int ); //.
-    void DisplayQuestion(int);//.
-    void DisplayAnswer(int);//.
-    void DisplayAnswer(int,char);//.
-    void EnterAnswer(int);//.
-    bool CheckingAnswer(int);//.
-    void clearScreen();//.
+    void SelectQuestion(int );
+    bool CheckingAnswer(int);
+
 private:
     static const int STAGE_COUNT = 15;
     static const char COMMA;

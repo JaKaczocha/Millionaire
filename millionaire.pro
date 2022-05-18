@@ -6,10 +6,11 @@ CONFIG -= qt
 SOURCES += \
         cMillionaire.cpp \
         cMillionaireData.cpp \
-        cMillionaireDisplay.cpp \
         cStageData.cpp \
+        cmillionairedisplaying.cpp \
         main.cpp
 
 HEADERS += \
     cMillionaire.h \
-    cStageData.h
+    cStageData.h \
+    cmillionairedisplaying.h

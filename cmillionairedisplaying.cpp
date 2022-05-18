@@ -1,14 +1,28 @@
 #include <windows.h>//.
-#include "cMillionaire.h"
+#include "cmillionairedisplaying.h"
 
+#include <cstdlib>
+#include <ctime>
 
-
-
-void cMillionaire::SelectQuestion(int stage)
+cMillionaireDisplaying::cMillionaireDisplaying()
 {
-    selectedQuestion = rand()%vData[stage].size();
+
 }
-void cMillionaire::DisplayQuestion(int stage)
+void cMillionaireDisplaying::EnterAnswer(int stage)
+{
+
+    do
+    {
+        cout<<"Twoja odpowiedź:_\b";
+        cin>>answer;
+    }while(answer!='a'&&answer!='b'&&answer!='c'&&answer!='d'
+           &&answer!='A'&&answer!='B'&&answer!='C'&&answer!='D');
+    clearScreen();
+    DisplayQuestion(stage);
+    DisplayAnswer(stage,answer);
+
+}
+void cMillionaireDisplaying::DisplayQuestion(int stage)
 {
     HANDLE hOut;
     hOut = GetStdHandle( STD_OUTPUT_HANDLE );
@@ -16,12 +30,12 @@ void cMillionaire::DisplayQuestion(int stage)
     cout<< vData[stage][selectedQuestion][1] <<endl;
 }
 
-void cMillionaire::DisplayAnswer(int stage)
+void cMillionaireDisplaying::DisplayAnswer(int stage)
 {
     HANDLE hOut;
     hOut = GetStdHandle( STD_OUTPUT_HANDLE );
     SetConsoleTextAttribute(hOut,15);
-    for(int i=2;i<COL_COUNT-1;i++)
+    for(int i=2;i<cMillionaire::COL_COUNT-1;i++)
     {
 
         switch(i)
@@ -46,7 +60,7 @@ void cMillionaire::DisplayAnswer(int stage)
         }
     }
 }
-void cMillionaire::DisplayAnswer(int stage,char answer)
+void cMillionaireDisplaying::DisplayAnswer(int stage,char answer)
 {
     HANDLE hOut;
     hOut = GetStdHandle( STD_OUTPUT_HANDLE );
@@ -115,21 +129,8 @@ void cMillionaire::DisplayAnswer(int stage,char answer)
     }
 }
 
-void cMillionaire::EnterAnswer(int stage)
-{
 
-    do
-    {
-        cout<<"Twoja odpowiedź:_\b";
-        cin>>answer;
-    }while(answer!='a'&&answer!='b'&&answer!='c'&&answer!='d'
-           &&answer!='A'&&answer!='B'&&answer!='C'&&answer!='D');
-    clearScreen();
-    DisplayQuestion(stage);
-    DisplayAnswer(stage,answer);
-
-}
-void cMillionaire::clearScreen()
+void cMillionaireDisplaying::clearScreen()
 {
 #if defined _WIN32
     system("cls");
@@ -141,5 +142,51 @@ void cMillionaire::clearScreen()
     system("clear");
 #endif
 }
+int cMillionaireDisplaying::GameFlow()
+{
+    srand( time( NULL ) );
+    string next;
+
+    for(int i=0;i<STAGE_COUNT;i++)
+    {
+
+        cout<<"etap "<<i+1<<endl;
+        SelectQuestion(i);
+        DisplayQuestion(i);
+        DisplayAnswer(i);
+        EnterAnswer(i);
+
+        cout<<"etap "<<i+1<<endl;
+        //millionaireGame.DisplayQuestion(i);
+        // millionaireGame.DisplayAnswer(i,answer);
+        if(!CheckingAnswer(i))
+        {
+
+            cout<<"Przegrałeś. Udało ci się dojść do "<<i+1<<" etapu!"<<endl;
+            break;
+        }
+        getchar();
+
+        if(i==STAGE_COUNT-1)
+        {
+            cout<<"\nPOPRAWNA ODPOWIEDŹ!\nJESTEŚ ZWYCIĘZCĄ!\n";
+            getline(cin,next,'\n');
+            break;
+        }
+        else
+        {
+            cout<<"\nPOPRAWNA ODPOWIEDŹ!\nAby przejść do "<<i+2<<" etapu naciśnij ENTER.";
+            getline(cin,next,'\n');
+            clearScreen();
+        }
 
 
+
+        cout<<endl;
+    }
+
+
+
+
+    return 0;
+}

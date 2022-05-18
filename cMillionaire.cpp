@@ -1,9 +1,10 @@
 #include "cMillionaire.h"
-#include <cstdlib>
-#include <ctime>
+
+
 
 cMillionaire::cMillionaire()
 {
+
     const unsigned int MIN_QUEST_COUNT = 10;
 
     for (unsigned i = 0; i < STAGE_COUNT; i++)
@@ -35,51 +36,9 @@ bool cMillionaire::CheckingAnswer(int stage)
 
 }
 
-int cMillionaire::GameFlow(cMillionaire &millionaireGame)
+
+void cMillionaire::SelectQuestion(int stage)
 {
-    srand( time( NULL ) );
-    string next;
-
-    for(int i=0;i<STAGE_COUNT;i++)
-    {
-
-        cout<<"etap "<<i+1<<endl;
-        millionaireGame.SelectQuestion(i);
-        millionaireGame.DisplayQuestion(i);
-        millionaireGame.DisplayAnswer(i);
-        millionaireGame.EnterAnswer(i);
-
-        cout<<"etap "<<i+1<<endl;
-        //millionaireGame.DisplayQuestion(i);
-        // millionaireGame.DisplayAnswer(i,answer);
-        if(!millionaireGame.CheckingAnswer(i))
-        {
-
-            cout<<"Przegrałeś. Udało ci się dojść do "<<i+1<<" etapu!"<<endl;
-            break;
-        }
-        getchar();
-
-        if(i==STAGE_COUNT-1)
-        {
-            cout<<"\nPOPRAWNA ODPOWIEDŹ!\nJESTEŚ ZWYCIĘZCĄ!\n";
-            getline(cin,next,'\n');
-            break;
-        }
-        else
-        {
-            cout<<"\nPOPRAWNA ODPOWIEDŹ!\nAby przejść do "<<i+2<<" etapu naciśnij ENTER.";
-            getline(cin,next,'\n');
-            clearScreen();
-        }
-
-
-
-        cout<<endl;
-    }
-
-
-
-
-    return 0;
+    selectedQuestion = rand()%vData[stage].size();
 }
+
