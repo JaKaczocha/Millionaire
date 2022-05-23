@@ -26,6 +26,7 @@ public:
 
 private:
     static const int STAGE_COUNT = 15;
+    static const int ANSWER_COUNT = 4;
     static const char COMMA;
 
 

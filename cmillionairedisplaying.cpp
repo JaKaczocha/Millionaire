@@ -154,6 +154,7 @@ int cMillionaireDisplaying::GameFlow()
         SelectQuestion(i);
         DisplayQuestion(i);
         DisplayAnswer(i);
+        DisplayBuoys(i);
         EnterAnswer(i);
 
         cout<<"etap "<<i+1<<endl;
@@ -184,9 +185,24 @@ int cMillionaireDisplaying::GameFlow()
 
         cout<<endl;
     }
-
-
-
-
     return 0;
+}
+
+void cMillionaireDisplaying::DisplayBuoys(const int stage)
+{
+    Buoy_50_50(stage);
+}
+
+void cMillionaireDisplaying::Buoy_50_50(const int stage)
+{
+    string correctAnswer = vData[stage][selectedQuestion]["CORRECT_ANSWER"];
+    int Ans1 = stoi(correctAnswer), Ans2;
+    do
+    {
+        Ans2 = rand() % ANSWER_COUNT + 1;
+    }while (Ans2 == Ans1);
+
+
+    // Ans1 <- correct one, Ans2 <- random
+    // "ANSWER" + to_string(Ans1)
 }

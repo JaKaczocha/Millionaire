@@ -16,6 +16,9 @@ public:
     void DisplayAnswer(int);
     void DisplayAnswer(int,char);
     void clearScreen();
+
+    void DisplayBuoys(const int);
+    void Buoy_50_50(const int);
 };
 
 #endif // CMILLIONAIREDISPLAYING_H
