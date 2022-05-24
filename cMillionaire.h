@@ -29,12 +29,13 @@ private:
     static const int ANSWER_COUNT = 4;
     static const char COMMA;
 
-
-
     vector<stageData> vData[STAGE_COUNT]; // <- Main data structure
 
     int selectedQuestion; //.
     char answer;//.
+    bool IsAnswerAvailable[ANSWER_COUNT];
+
+    void resetAccessFlags(const bool val);
 
     void readFile();
     bool headerIsGood(string line);

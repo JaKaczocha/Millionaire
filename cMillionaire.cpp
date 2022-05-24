@@ -3,6 +3,7 @@
 
 
 cMillionaire::cMillionaire()
+    : IsAnswerAvailable{1, 1, 1, 1}
 {
 
     const unsigned int MIN_QUEST_COUNT = 10;
@@ -42,3 +43,10 @@ void cMillionaire::SelectQuestion(int stage)
     selectedQuestion = rand()%vData[stage].size();
 }
 
+void cMillionaire::resetAccessFlags(const bool val)
+{
+    for (auto& flag : IsAnswerAvailable)
+    {
+        flag = val;
+    }
+}

@@ -4,8 +4,9 @@
 #include "cStageData.h"
 #include "cMillionaire.h"
 
+typedef unsigned char uint1;
 
-class cMillionaireDisplaying:public cMillionaire
+class cMillionaireDisplaying: public cMillionaire
 {
 
 public:
@@ -16,6 +17,7 @@ public:
     void DisplayAnswer(int);
     void DisplayAnswer(int,char);
     void clearScreen();
+    void colorTxt(const string& Txt, uint1 color);
 
     void DisplayBuoys(const int);
     void Buoy_50_50(const int);

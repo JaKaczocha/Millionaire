@@ -27,38 +27,49 @@ void cMillionaireDisplaying::DisplayQuestion(int stage)
     HANDLE hOut;
     hOut = GetStdHandle( STD_OUTPUT_HANDLE );
     SetConsoleTextAttribute(hOut,15);
-    cout<< vData[stage][selectedQuestion][1] <<endl;
+    cout<< vData[stage][selectedQuestion]["QUESTION"] <<endl;
 }
 
 void cMillionaireDisplaying::DisplayAnswer(int stage)
 {
+    char ansChar = 'A';
     HANDLE hOut;
     hOut = GetStdHandle( STD_OUTPUT_HANDLE );
     SetConsoleTextAttribute(hOut,15);
-    for(int i=2;i<cMillionaire::COL_COUNT-1;i++)
+    for(int i = 2, j = 0; i<cMillionaire::COL_COUNT-1; i++, j++, ansChar++)
     {
 
-        switch(i)
+        if (IsAnswerAvailable[j])
         {
-        case 2:
-            cout<<"A."<<vData[stage][selectedQuestion][i]<<"   ";
-
-                break;
-        case 3:
-            cout<<"B."<<vData[stage][selectedQuestion][i]<<"    ";
-            break;
-
-        case 4:
-            cout<<"C."<<vData[stage][selectedQuestion][i]<<"   ";
-
-            break;
-
-        default:
-            cout<<"D."<< vData[stage][selectedQuestion][i]<<endl;
-            break;
-
+            cout << ansChar << '.' << vData[stage][selectedQuestion][i] << "   ";
         }
+        else
+        {
+            // Blanking answer
+            colorTxt( string(1, ansChar)  + "." + vData[stage][selectedQuestion][i] + "   ", 0x00);
+        }
+//        switch(i)
+//        {
+//        case 2:
+//            cout<<"A."<<vData[stage][selectedQuestion][i]<<"   ";
+
+//                break;
+//        case 3:
+//            cout<<"B."<<vData[stage][selectedQuestion][i]<<"    ";
+//            break;
+
+//        case 4:
+//            cout<<"C."<<vData[stage][selectedQuestion][i]<<"   ";
+
+//            break;
+
+//        default:
+//            cout<<"D."<< vData[stage][selectedQuestion][i]<<endl;
+//            break;
+
+//        }
     }
+    cout << '\n';
 }
 void cMillionaireDisplaying::DisplayAnswer(int stage,char answer)
 {
@@ -152,10 +163,13 @@ int cMillionaireDisplaying::GameFlow()
 
         cout<<"etap "<<i+1<<endl;
         SelectQuestion(i);
+        DisplayBuoys(i);
         DisplayQuestion(i);
         DisplayAnswer(i);
-        DisplayBuoys(i);
+
         EnterAnswer(i);
+
+
 
         cout<<"etap "<<i+1<<endl;
         //millionaireGame.DisplayQuestion(i);
@@ -181,28 +195,57 @@ int cMillionaireDisplaying::GameFlow()
             clearScreen();
         }
 
-
-
         cout<<endl;
+
+        resetAccessFlags(1);
     }
     return 0;
 }
 
 void cMillionaireDisplaying::DisplayBuoys(const int stage)
 {
-    Buoy_50_50(stage);
+    cout << "\t\t\t*        KOŁA RATUNKOWE       *\n";
+    cout << "\t\t\t*-----------------------------*\n";
+    cout << "\t\t\t| 1. ";
+    colorTxt(        "50/50", 0x08);
+    cout <<               "                    |\n";
+    cout << "\t\t\t| 2. ";
+    colorTxt(        "Telefon do przyjaciela", 0x08);
+    cout <<                                "   |\n";
+    cout << "\t\t\t| 3. ";
+    colorTxt(        "Pytanie do publiczności", 0x08);
+    cout <<                                 "  |\n";
+    cout << "\t\t\t*-----------------------------*\n";
+    cout << "\t\t\t*Wybranie 1/2/3 to użycie koła*\n";
+
+
+    // Buoy_50_50(stage);
 }
 
 void cMillionaireDisplaying::Buoy_50_50(const int stage)
 {
+    resetAccessFlags(0);
+
     string correctAnswer = vData[stage][selectedQuestion]["CORRECT_ANSWER"];
-    int Ans1 = stoi(correctAnswer), Ans2;
+    int Ans1 = stoi(correctAnswer) - 1, Ans2;
     do
     {
-        Ans2 = rand() % ANSWER_COUNT + 1;
-    }while (Ans2 == Ans1);
+        Ans2 = rand() % ANSWER_COUNT;
+    }
+    while (Ans2 == Ans1);
 
+    IsAnswerAvailable[Ans1] = 1;
+    IsAnswerAvailable[Ans2] = 1;
 
-    // Ans1 <- correct one, Ans2 <- random
-    // "ANSWER" + to_string(Ans1)
+    // Ans1 <- correct, Ans2 <- random
+}
+
+void cMillionaireDisplaying::colorTxt(const string& Txt, uint1 color)
+{
+    HANDLE hOut;
+    hOut = GetStdHandle( STD_OUTPUT_HANDLE );
+
+    SetConsoleTextAttribute(hOut, color);
+    cout << Txt;
+    SetConsoleTextAttribute(hOut, 0x0F); // Reseting console text to white
 }
