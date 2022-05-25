@@ -22,6 +22,7 @@ public:
     void DisplayBuoyMenu();
     void enableBuoy(const int, buoyType);
     void Buoy_50_50(const int);
+    void Buoy_Audience(int);
 };
 
 #endif // CMILLIONAIREDISPLAYING_H
