@@ -174,19 +174,20 @@ int cMillionaireDisplaying::GameFlow()
     {
         SelectQuestion(i);
 
-        buoyType bType;
+        buoyType bType = b_none;
         do
         {
             clearScreen();
+
             cout<<"*ETAP* "<<i+1<<endl;
 
+            enableBuoy(i, bType);
             DisplayBuoyMenu();
             DisplayQuestion(i);
             DisplayAnswer(i);
 
             bType = buoyType(EnterAnswer(i));
 
-            enableBuoy(i, bType);
         }
         while (bType != b_none);
 
@@ -225,13 +226,13 @@ void cMillionaireDisplaying::DisplayBuoyMenu()
     cout << "\t\t\t*        KOŁA RATUNKOWE       *\n";
     cout << "\t\t\t*-----------------------------*\n";
     cout << "\t\t\t| 1. ";
-    colorTxt(        "50/50", 0x08);
+    colorTxt(        "50/50", IsBuoyAvailable[b_50_50] ? 0x0F : 0x04);
     cout <<               "                    |\n";
     cout << "\t\t\t| 2. ";
-    colorTxt(        "Telefon do przyjaciela", 0x08);
+    colorTxt(        "Telefon do przyjaciela", IsBuoyAvailable[b_friend] ? 0x0F : 0x04);
     cout <<                                "   |\n";
     cout << "\t\t\t| 3. ";
-    colorTxt(        "Pytanie do publiczności", 0x08);
+    colorTxt(        "Pytanie do publiczności", IsBuoyAvailable[b_audience] ? 0x0F : 0x04);
     cout <<                                 "  |\n";
     cout << "\t\t\t*-----------------------------*\n";
     cout << "\t\t\t*Wybranie 1/2/3 to użycie koła*\n\n";
@@ -243,15 +244,28 @@ void cMillionaireDisplaying::enableBuoy(const int stage, buoyType bType)
     switch(bType)
     {
     case b_50_50: {
-        Buoy_50_50(stage);
+        if (IsBuoyAvailable[b_50_50])
+        {
+            IsBuoyAvailable[b_50_50] = 0;
+            Buoy_50_50(stage);
+        }
         break;
     }
     case b_friend: {
-        cout << "\nFRIEND CALL\n";
+
+        if (IsBuoyAvailable[b_friend])
+        {
+            IsBuoyAvailable[b_friend] = 0;
+            cout << "\nFRIEND CALL\n\n";
+        }
         break;
     }
     case b_audience: {
-        cout << "\nQUESTION TO AUDIENCE\n";
+        if (IsBuoyAvailable[b_audience])
+        {
+            IsBuoyAvailable[b_audience] = 0;
+            cout << "\nQUESTION TO AUDIENCE\n\n";
+        }
         break;
     }
      case b_none:{

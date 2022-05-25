@@ -35,7 +35,7 @@ private:
     int selectedQuestion; //.
     char answer;//.
     bool IsAnswerAvailable[ANSWER_COUNT];
-    bool IsBuoyAvailable[BUOY_COUNT];
+    bool IsBuoyAvailable[BUOY_COUNT + 1]; // +1 to match enum buoyType
 
     void resetAccessFlags(const bool val);
 
@@ -50,6 +50,7 @@ private:
         b_friend,
         b_audience
     };
+
 
 
 };
