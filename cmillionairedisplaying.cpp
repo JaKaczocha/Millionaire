@@ -2,6 +2,7 @@
 #include "cmillionairedisplaying.h"
 
 #include <cstdlib>
+#include <cstdio>
 #include <ctime>
 
 static inline int ctoi(const char c)
@@ -20,6 +21,8 @@ int cMillionaireDisplaying::EnterAnswer(int stage)
     {
         cout<<"Twoja odpowiedź:_\b";
         cin>>answer;
+        cin.ignore(1024, '\n'); // Clearing stream from additional characters till '\n'
+
     }while(answer!='a'&&answer!='b'&&answer!='c'&&answer!='d'
            &&answer!='A'&&answer!='B'&&answer!='C'&&answer!='D'
            && answer != '1' && answer != '2' && answer != '3');
@@ -29,7 +32,7 @@ int cMillionaireDisplaying::EnterAnswer(int stage)
     }
     clearScreen();
 
-    cout<<"*ETAP* "<<stage+1<<endl;
+    cout<<"*ETAP* "<<stage+1 << '\n';
 
     DisplayBuoyMenu();
     DisplayQuestion(stage);
@@ -199,7 +202,7 @@ int cMillionaireDisplaying::GameFlow()
             cout<<"Przegrałeś. Udało ci się dojść do "<<i+1<<" etapu!"<<endl;
             break;
         }
-        getchar();
+        // getchar();
 
         if(i==STAGE_COUNT-1)
         {
