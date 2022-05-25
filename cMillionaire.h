@@ -27,6 +27,7 @@ public:
 private:
     static const int STAGE_COUNT = 15;
     static const int ANSWER_COUNT = 4;
+    static const int BUOY_COUNT = 3;
     static const char COMMA;
 
     vector<stageData> vData[STAGE_COUNT]; // <- Main data structure
@@ -34,12 +35,22 @@ private:
     int selectedQuestion; //.
     char answer;//.
     bool IsAnswerAvailable[ANSWER_COUNT];
+    bool IsBuoyAvailable[BUOY_COUNT];
 
     void resetAccessFlags(const bool val);
 
     void readFile();
     bool headerIsGood(string line);
     void saveLine(string line, vector<stageData>& vData);
+
+    enum buoyType
+    {
+        b_none,
+        b_50_50,
+        b_friend,
+        b_audience
+    };
+
 
 };
 

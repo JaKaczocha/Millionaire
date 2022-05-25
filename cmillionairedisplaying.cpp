@@ -4,23 +4,38 @@
 #include <cstdlib>
 #include <ctime>
 
-cMillionaireDisplaying::cMillionaireDisplaying()
+static inline int ctoi(const char c)
 {
+    // Works on [0; 9] chars
+    // Returns given character if conversion can't happen
 
+    return (c >= '0' && c <= '9') ? c - '0' : c;
 }
-void cMillionaireDisplaying::EnterAnswer(int stage)
-{
 
+cMillionaireDisplaying::cMillionaireDisplaying() {}
+
+int cMillionaireDisplaying::EnterAnswer(int stage)
+{
     do
     {
         cout<<"Twoja odpowiedź:_\b";
         cin>>answer;
     }while(answer!='a'&&answer!='b'&&answer!='c'&&answer!='d'
-           &&answer!='A'&&answer!='B'&&answer!='C'&&answer!='D');
+           &&answer!='A'&&answer!='B'&&answer!='C'&&answer!='D'
+           && answer != '1' && answer != '2' && answer != '3');
+    if (answer == '1' || answer == '2' || answer == '3')
+    {
+        return ctoi(answer);
+    }
     clearScreen();
-    DisplayQuestion(stage);
-    DisplayAnswer(stage,answer);
 
+    cout<<"*ETAP* "<<stage+1<<endl;
+
+    DisplayBuoyMenu();
+    DisplayQuestion(stage);
+    DisplayColoredAnswer(stage,answer);
+
+    return b_none;
 }
 void cMillionaireDisplaying::DisplayQuestion(int stage)
 {
@@ -71,13 +86,11 @@ void cMillionaireDisplaying::DisplayAnswer(int stage)
     }
     cout << '\n';
 }
-void cMillionaireDisplaying::DisplayAnswer(int stage,char answer)
+void cMillionaireDisplaying::DisplayColoredAnswer(int stage,char answer)
 {
     HANDLE hOut;
     hOut = GetStdHandle( STD_OUTPUT_HANDLE );
     SetConsoleTextAttribute(hOut,15);
-
-
 
     for(int i=2;i<COL_COUNT-1;i++)
     {
@@ -148,7 +161,6 @@ void cMillionaireDisplaying::clearScreen()
     //clrscr(); // including header file : conio.h
 #elif defined (__LINUX__) || defined(__gnu_linux__) || defined(__linux__)
     system("clear");
-    //std::cout<< u8"\033[2J\033[1;1H"; //Using ANSI Escape Sequences
 #elif defined (__APPLE__)
     system("clear");
 #endif
@@ -160,18 +172,24 @@ int cMillionaireDisplaying::GameFlow()
 
     for(int i=0;i<STAGE_COUNT;i++)
     {
-
-        cout<<"etap "<<i+1<<endl;
         SelectQuestion(i);
-        DisplayBuoys(i);
-        DisplayQuestion(i);
-        DisplayAnswer(i);
 
-        EnterAnswer(i);
+        buoyType bType;
+        do
+        {
+            clearScreen();
+            cout<<"*ETAP* "<<i+1<<endl;
 
+            DisplayBuoyMenu();
+            DisplayQuestion(i);
+            DisplayAnswer(i);
 
+            bType = buoyType(EnterAnswer(i));
 
-        cout<<"etap "<<i+1<<endl;
+            enableBuoy(i, bType);
+        }
+        while (bType != b_none);
+
         //millionaireGame.DisplayQuestion(i);
         // millionaireGame.DisplayAnswer(i,answer);
         if(!CheckingAnswer(i))
@@ -202,7 +220,7 @@ int cMillionaireDisplaying::GameFlow()
     return 0;
 }
 
-void cMillionaireDisplaying::DisplayBuoys(const int stage)
+void cMillionaireDisplaying::DisplayBuoyMenu()
 {
     cout << "\t\t\t*        KOŁA RATUNKOWE       *\n";
     cout << "\t\t\t*-----------------------------*\n";
@@ -216,10 +234,32 @@ void cMillionaireDisplaying::DisplayBuoys(const int stage)
     colorTxt(        "Pytanie do publiczności", 0x08);
     cout <<                                 "  |\n";
     cout << "\t\t\t*-----------------------------*\n";
-    cout << "\t\t\t*Wybranie 1/2/3 to użycie koła*\n";
+    cout << "\t\t\t*Wybranie 1/2/3 to użycie koła*\n\n";
 
+}
 
-    // Buoy_50_50(stage);
+void cMillionaireDisplaying::enableBuoy(const int stage, buoyType bType)
+{
+    switch(bType)
+    {
+    case b_50_50: {
+        Buoy_50_50(stage);
+        break;
+    }
+    case b_friend: {
+        cout << "\nFRIEND CALL\n";
+        break;
+    }
+    case b_audience: {
+        cout << "\nQUESTION TO AUDIENCE\n";
+        break;
+    }
+     case b_none:{
+        return;
+        break;
+    }
+
+    }
 }
 
 void cMillionaireDisplaying::Buoy_50_50(const int stage)

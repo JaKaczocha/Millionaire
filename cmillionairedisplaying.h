@@ -12,14 +12,15 @@ class cMillionaireDisplaying: public cMillionaire
 public:
     cMillionaireDisplaying();
     int GameFlow();//transitional place
-    void EnterAnswer(int);//transitional place
+    int EnterAnswer(int);//transitional place
     void DisplayQuestion(int);
     void DisplayAnswer(int);
-    void DisplayAnswer(int,char);
+    void DisplayColoredAnswer(int,char);
     void clearScreen();
     void colorTxt(const string& Txt, uint1 color);
 
-    void DisplayBuoys(const int);
+    void DisplayBuoyMenu();
+    void enableBuoy(const int, buoyType);
     void Buoy_50_50(const int);
 };
 

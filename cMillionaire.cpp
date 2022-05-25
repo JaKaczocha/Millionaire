@@ -3,7 +3,7 @@
 
 
 cMillionaire::cMillionaire()
-    : IsAnswerAvailable{1, 1, 1, 1}
+    : IsAnswerAvailable{1, 1, 1, 1}, IsBuoyAvailable{1, 1, 1}
 {
 
     const unsigned int MIN_QUEST_COUNT = 10;
