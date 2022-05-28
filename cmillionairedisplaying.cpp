@@ -261,6 +261,10 @@ void cMillionaireDisplaying::enableBuoy(const int stage, buoyType bType)
             IsBuoyAvailable[b_friend] = 0;
             cout << "\nFRIEND CALL\n\n";
         }
+        else if(whenFriend==stage)
+        {
+            cout<<"FRIEND CALL\n\n";
+        }
         break;
     }
     case b_audience: {
@@ -268,6 +272,10 @@ void cMillionaireDisplaying::enableBuoy(const int stage, buoyType bType)
         {
             IsBuoyAvailable[b_audience] = 0;
             Buoy_Audience(stage);
+        }
+        else if(whenAudience==stage)
+        {
+            Buoy_Audience_Display();
         }
         break;
     }
@@ -299,134 +307,70 @@ void cMillionaireDisplaying::Buoy_50_50(const int stage)
 
 void cMillionaireDisplaying::Buoy_Audience(int stage)
 {
-    //srand(time(NULL));
+    whenAudience=stage;
+
     int Ans;
-    int Votes[4]={0};
-
-
-
-    for(int i=51;i<=100;i++)
+    int index=stoi(vData[stage][selectedQuestion]["CORRECT_ANSWER"])-1;
+    Votes[index]=rand()%51+50;
+    for(int i=0;i<100-Votes[index];i++)
     {
         do
         {
             Ans=rand()%4;
 
-        }while(!IsAnswerAvailable[Ans]);
-
-        switch(Ans)
-        {
-        case(0):
-            Votes[0]++;
-            break;
-        case(1):
-            Votes[1]++;
-            break;
-        case(2):
-            Votes[2]++;
-            break;
-        case(3):
-            Votes[3]++;
-            break;
-        }
-        Votes[stoi(vData[stage][selectedQuestion][COL_COUNT-1])-1]++;
-        /*if(i%5==0)
-        {
-
-
-            cout<<"\nA."<<int(100.0*Votes[0]/i)<<"%";
-            if(int(100.0*Votes[0]/i)<10)
-            {
-                cout<<" ";
-            }
-            cout<<"|";
-            for(int z=0;z<Votes[0];z++)
-            {
-                cout<<"*";
-            }
-            cout<<"\nB."<<int(100.0*Votes[1]/i)<<"%";
-            if(int(100.0*Votes[1]/i)<10)
-            {
-                cout<<" ";
-            }
-            cout<<"|";
-            for(int z=0;z<Votes[2];z++)
-            {
-                cout<<"*";
-            }
-
-            cout<<"\nC."<<int(100.0*Votes[2]/i)<<"%";
-            if(int(100.0*Votes[2]/i)<10)
-            {
-                cout<<" ";
-            }
-            cout<<"|";
-            for(int z=0;z<Votes[2];z++)
-            {
-                cout<<"*";
-            }
-
-            cout<<"\nD."<<int(100.0*Votes[3]/i)<<"%";
-            if(int(100.0*Votes[3]/i)<10)
-            {
-                cout<<" ";
-            }
-            cout<<"|";
-            for(int z=0;z<Votes[3];z++)
-            {
-                cout<<"*";
-            }
-
-            Sleep(1000);
-            system("cls");
-        }*/
+        }while(!IsAnswerAvailable[Ans] || Ans==index);
+        Votes[Ans]++;
 
     }
+    Buoy_Audience_Display();
+}
+
+void cMillionaireDisplaying::Buoy_Audience_Display()
+{
+    cout<<"\nA."<<Votes[0]<<"%";
+    if(Votes[0]<10)
     {
-
-        cout<<"\nA."<<Votes[0]<<"%";
-        if(Votes[0]<10)
-        {
-            cout<<" ";
-        }
-        cout<<"|";
-        for(int z=0;z<Votes[0];z++)
-        {
-            cout<<"*";
-        }
-
-        cout<<"\nB."<<Votes[1]<<"%";
-        if(Votes[1]<10)
-        {
-            cout<<" ";
-        }
-        cout<<"|";
-        for(int z=0;z<Votes[1];z++)
-        {
-            cout<<"*";
-        }
-
-        cout<<"\nC."<<Votes[2]<<"%";
-        if(Votes[2]<10)
-        {
-            cout<<" ";
-        }
-        cout<<"|";
-        for(int z=0;z<Votes[2];z++)
-        {
-            cout<<"*";
-        }
-
-        cout<<"\nD."<<Votes[3]<<"%";
-        if(Votes[3]<10)
-        {
-            cout<<" ";
-        }
-        cout<<"|";
-        for(int z=0;z<Votes[3];z++)
-        {
-            cout<<"*";
-        }
+        cout<<" ";
     }
+    cout<<"|";
+    for(int z=0;z<Votes[0];z++)
+    {
+        cout<<"*";
+    }
+
+    cout<<"\nB."<<Votes[1]<<"%";
+    if(Votes[1]<10)
+    {
+        cout<<" ";
+    }
+    cout<<"|";
+    for(int z=0;z<Votes[1];z++)
+    {
+        cout<<"*";
+    }
+
+    cout<<"\nC."<<Votes[2]<<"%";
+    if(Votes[2]<10)
+    {
+        cout<<" ";
+    }
+    cout<<"|";
+    for(int z=0;z<Votes[2];z++)
+    {
+        cout<<"*";
+    }
+
+    cout<<"\nD."<<Votes[3]<<"%";
+    if(Votes[3]<10)
+    {
+        cout<<" ";
+    }
+    cout<<"|";
+    for(int z=0;z<Votes[3];z++)
+    {
+        cout<<"*";
+    }
+
     cout<<"\n\n";
 }
 void cMillionaireDisplaying::colorTxt(const string& Txt, uint1 color)

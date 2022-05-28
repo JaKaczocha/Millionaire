@@ -23,6 +23,11 @@ public:
     void enableBuoy(const int, buoyType);
     void Buoy_50_50(const int);
     void Buoy_Audience(int);
+    void Buoy_Audience_Display();
+
+    int whenAudience;
+    int whenFriend;
+    int Votes[4]{0};
 };
 
 #endif // CMILLIONAIREDISPLAYING_H
