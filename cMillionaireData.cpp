@@ -57,7 +57,7 @@ void cMillionaire::readFriendCall(int stage)
         return;
     }
 
-    int response=rand()%3*2+2;
+    int response=rand()%Num_Friend_Answer*2+2;
     string line{};
     int lineNumber=1;
     while(getline(file, line) && lineNumber!=response)
@@ -95,8 +95,11 @@ void cMillionaire::readFriendCall(int stage)
     }
     else
     {
-        int friendAns=rand()%5+1;
-
+        int friendAns;
+        do
+        {
+            friendAns=rand()%5+1;
+        }while(!IsAnswerAvailable[friendAns]);
         if(friendAns==1)
         {
            correctAns="A";

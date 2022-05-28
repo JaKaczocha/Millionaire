@@ -29,7 +29,9 @@ private:
     static const int STAGE_COUNT = 15;
     static const int ANSWER_COUNT = 4;
     static const int BUOY_COUNT = 3;
+    static const int Num_Friend_Answer = 10;
     static const char COMMA;
+
 
     vector<stageData> vData[STAGE_COUNT]; // <- Main data structure
 
