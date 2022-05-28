@@ -14,19 +14,19 @@ cMillionaire::cMillionaire()
 
 bool cMillionaire::CheckingAnswer(int stage)
 {
-    if((answer=='a'||answer=='A')&&vData[stage][selectedQuestion][COL_COUNT-1]=="1")
+    if((answer=='a'||answer=='A')&&vData[stage][selectedQuestion]["CORRECT_ANSWER"]=="1")
     {
        return true;
     }
-    else if((answer=='b'||answer=='B')&&vData[stage][selectedQuestion][COL_COUNT-1]=="2")
+    else if((answer=='b'||answer=='B')&&vData[stage][selectedQuestion]["CORRECT_ANSWER"]=="2")
     {
        return true;
     }
-    else if((answer=='c'||answer=='C')&&vData[stage][selectedQuestion][COL_COUNT-1]=="3")
+    else if((answer=='c'||answer=='C')&&vData[stage][selectedQuestion]["CORRECT_ANSWER"]=="3")
     {
        return true;
     }
-    else if((answer=='d'||answer=='D')&&vData[stage][selectedQuestion][COL_COUNT-1]=="4")
+    else if((answer=='d'||answer=='D')&&vData[stage][selectedQuestion]["CORRECT_ANSWER"]=="4")
     {
        return true;
     }

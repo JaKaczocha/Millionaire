@@ -20,6 +20,7 @@ public:
 
     cMillionaire();
     bool loadData();
+    bool loadFriendCall();
     void printStageContent();
     void SelectQuestion(int );
     bool CheckingAnswer(int);
@@ -36,10 +37,12 @@ private:
     char answer;//.
     bool IsAnswerAvailable[ANSWER_COUNT];
     bool IsBuoyAvailable[BUOY_COUNT + 1]; // +1 to match enum buoyType
+    string friendCall;
 
     void resetAccessFlags(const bool val);
 
     void readFile();
+    void readFriendCall(int);
     bool headerIsGood(string line);
     void saveLine(string line, vector<stageData>& vData);
 

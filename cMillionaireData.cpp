@@ -21,6 +21,113 @@ bool cMillionaire::loadData()
     return false;
 }
 
+bool cMillionaire::loadFriendCall()
+{
+    // Returns: false if OK
+    try
+    {
+        readFriendCall(-1);
+    }
+    catch(const logic_error& lError)
+    {
+        cerr << lError.what() << endl;
+        return true;
+    }
+
+    return false;
+}
+
+void cMillionaire::readFriendCall(int stage)
+{
+
+    ifstream file;
+    const string folder = "../project_07_35244/friendCall/response.txt";
+    string fPath{};
+
+    file.open(folder,ios::in);
+
+    if (!file.good())
+    {
+        file.close();
+        throw logic_error("Problem z otwarciem pliku: " + folder);
+    }
+
+    if(stage==-1)
+    {
+        return;
+    }
+
+    int response=rand()%3*2+2;
+    string line{};
+    int lineNumber=1;
+    while(getline(file, line) && lineNumber!=response)
+    {
+        friendCall=line;
+
+        lineNumber++;
+    }
+
+    string correctAns;
+    if(stage<5)
+
+    {
+        if(vData[stage][selectedQuestion]["CORRECT_ANSWER"]=="1")
+        {
+           correctAns="A";
+        }
+        else if(vData[stage][selectedQuestion]["CORRECT_ANSWER"]=="2")
+        {
+           correctAns="B";
+        }
+        else if(vData[stage][selectedQuestion]["CORRECT_ANSWER"]=="3")
+        {
+           correctAns="C";
+        }
+        else if(vData[stage][selectedQuestion]["CORRECT_ANSWER"]=="4")
+        {
+           correctAns="D";
+        }
+        else
+        {
+            throw logic_error("Problem z otwarciem pliku: " + folder);
+
+        }
+    }
+    else
+    {
+        int friendAns=rand()%5+1;
+
+        if(friendAns==1)
+        {
+           correctAns="A";
+        }
+        else if(friendAns==2)
+        {
+           correctAns="B";
+        }
+        else if(friendAns==3)
+        {
+           correctAns="C";
+        }
+        else if(friendAns==4)
+        {
+           correctAns="D";
+        }
+        else
+        {
+            throw logic_error("Problem z otwarciem pliku: " + folder);
+
+        }
+    }
+    friendCall=friendCall + correctAns + line;
+
+
+    file.close();
+
+
+
+}
+
 void cMillionaire::readFile()
 {
     ifstream file; // Domyslnie ustawiona zmienna do odczytu

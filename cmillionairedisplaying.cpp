@@ -259,11 +259,12 @@ void cMillionaireDisplaying::enableBuoy(const int stage, buoyType bType)
         if (IsBuoyAvailable[b_friend])
         {
             IsBuoyAvailable[b_friend] = 0;
-            cout << "\nFRIEND CALL\n\n";
+            readFriendCall(stage);
+            cout<<friendCall<<endl;
         }
         else if(whenFriend==stage)
         {
-            cout<<"FRIEND CALL\n\n";
+            cout<<friendCall<<endl;
         }
         break;
     }
