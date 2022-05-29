@@ -14,7 +14,10 @@ static inline int ctoi(const char c)
     return (c >= '0' && c <= '9') ? c - '0' : c;
 }
 
-cMillionaireDisplaying::cMillionaireDisplaying() {}
+cMillionaireDisplaying::cMillionaireDisplaying()
+    : stagePrize{"0", "100", "200", "300", "500", "1'000", "2'000", "4'000", "8'000", "16'000", "32'000",
+                 "64'000", "125'000", "250'000", "500'000", "1'000'000"}
+{}
 
 int cMillionaireDisplaying::EnterAnswer()
 {
@@ -173,17 +176,24 @@ int cMillionaireDisplaying::GameFlow()
 {
     srand( static_cast<unsigned int>(time( NULL )));
     string next;
+    buoyType bType = b_none;
 
-    for(;this->stage<STAGE_COUNT;this->stage++)
+    for(; this->stage < STAGE_COUNT; this->stage++)
     {
         SelectQuestion();
 
-        buoyType bType = b_none;
         do
         {
             clearScreen();
 
-            cout<<"*ETAP* "<<stage+1<<endl;
+            cout << "*ETAP* "<< stage + 1 << '\n';
+            if (0 < stage)
+            {
+                cout << "Masz ";
+                colorTxt(stagePrize[stage] + "$\n", 0x02);
+            }
+            cout << "Grasz o ";
+            colorTxt(stagePrize[stage+1] + "$\n", 0x04);
 
             enableBuoy( bType);
             DisplayBuoyMenu();
@@ -200,7 +210,9 @@ int cMillionaireDisplaying::GameFlow()
         if(!CheckingAnswer())
         {
 
-            cout<<"Przegrałeś. Udało ci się dojść do "<<stage+1<<" etapu!"<<endl;
+            cout << "\nPrzegrałeś. Udało ci się dojść do "<<stage+1<<" etapu!"<<endl;
+            cout << "Twoja nagroda to: ";
+            colorTxt(stagePrize[stage] + "$\n", 0x0A);
             break;
         }
         // getchar();
@@ -208,12 +220,14 @@ int cMillionaireDisplaying::GameFlow()
         if(stage==STAGE_COUNT-1)
         {
             cout<<"\nPOPRAWNA ODPOWIEDŹ!\nJESTEŚ ZWYCIĘZCĄ!\n";
+            cout << "$ NAGRODA $\n";
+            colorTxt(stagePrize[stage+1], 0x0E);
             getline(cin,next,'\n');
             break;
         }
         else
         {
-            cout<<"\nPOPRAWNA ODPOWIEDŹ!\nAby przejść do "<<stage+2<<" etapu naciśnij ENTER.";
+            cout<<"\nPOPRAWNA ODPOWIEDŹ!\nMasz juz w kieszeni " << stagePrize[stage+1] << "$\nAby przejść do "<<stage+2<<" etapu naciśnij ENTER.";
             getline(cin,next,'\n');
             clearScreen();
         }
@@ -342,6 +356,8 @@ void cMillionaireDisplaying::Buoy_Audience()
 
 void cMillionaireDisplaying::Buoy_Audience_Display()
 {
+    colorTxt("\nPytanie do publiczności...", 0x06);
+
     cout<<"\nA."<<Votes[0]<<"%";
     if(Votes[0]<10)
     {
@@ -391,7 +407,8 @@ void cMillionaireDisplaying::Buoy_Audience_Display()
 
 void cMillionaireDisplaying::Buoy_Friend_Display()
 {
-    cout<<friendCall<<endl;
+    colorTxt("\nTelefon do przyjaciela...\n", 0x06);
+    cout<<friendCall<< "\n\n";
 }
 
 void cMillionaireDisplaying::colorTxt(const string& Txt, uint1 color)

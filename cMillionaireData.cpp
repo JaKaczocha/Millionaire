@@ -91,17 +91,18 @@ void cMillionaire::readFriendCall()
         }
         else
         {
-            throw logic_error("Problem z otwarciem pliku: " + folder);
+            throw logic_error("Error: at stage < 5 in " + folder);
 
         }
     }
     else
     {
-        int friendAns;
+        int friendAns{};
         do
         {
-            friendAns=rand()%5+1;
-        }while(!IsAnswerAvailable[friendAns]);
+            friendAns=rand()%4+1; // [1; 4]
+        }while(!IsAnswerAvailable[friendAns - 1]); // <-- requires [0; 3]
+
         if(friendAns==1)
         {
            correctAns="A";
@@ -120,7 +121,7 @@ void cMillionaire::readFriendCall()
         }
         else
         {
-            throw logic_error("Problem z otwarciem pliku: " + folder);
+            throw logic_error("Error: at stage >= 5 in " + folder);
 
         }
     }

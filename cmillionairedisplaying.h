@@ -28,6 +28,7 @@ public:
     void Buoy_Friend_Display();
 
     int Votes[4]{0};
+    const string stagePrize[STAGE_COUNT + 1];
 };
 
 #endif // CMILLIONAIREDISPLAYING_H
