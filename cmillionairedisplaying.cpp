@@ -1,16 +1,15 @@
 #include <windows.h>
-#include "cmillionairedisplaying.h"
 #include <random>
 #include <cstdlib>
 #include <cstdio>
 #include <ctime>
 #include <list>
+#include "cMillionaireDisplaying.h"
 
 static inline int ctoi(const char c)
 {
     // Works on [0; 9] chars
     // Returns given character if conversion can't happen
-
     return (c >= '0' && c <= '9') ? c - '0' : c;
 }
 
@@ -34,7 +33,7 @@ int cMillionaireDisplaying::EnterAnswer()
     {
         return ctoi(answer);
     }
-    clearScreen();
+    ClearScreen();
 
     cout<<"*ETAP* "<<stage+1 << '\n';
 
@@ -60,7 +59,6 @@ void cMillionaireDisplaying::DisplayAnswer()
     SetConsoleTextAttribute(hOut,15);
     for(int i = 2, j = 0; i<cMillionaire::COL_COUNT-1; i++, j++, ansChar++)
     {
-
         if (IsAnswerAvailable[j])
         {
             cout << ansChar << '.' << vData[stage][selectedQuestion][i] << "   ";
@@ -68,32 +66,12 @@ void cMillionaireDisplaying::DisplayAnswer()
         else
         {
             // Blanking answer
-            colorTxt( string(1, ansChar)  + "." + vData[stage][selectedQuestion][i] + "   ", 0x00);
+            ColorTxt( string(1, ansChar)  + "." + vData[stage][selectedQuestion][i] + "   ", 0x00);
         }
-//        switch(i)
-//        {
-//        case 2:
-//            cout<<"A."<<vData[stage][selectedQuestion][i]<<"   ";
-
-//                break;
-//        case 3:
-//            cout<<"B."<<vData[stage][selectedQuestion][i]<<"    ";
-//            break;
-
-//        case 4:
-//            cout<<"C."<<vData[stage][selectedQuestion][i]<<"   ";
-
-//            break;
-
-//        default:
-//            cout<<"D."<< vData[stage][selectedQuestion][i]<<endl;
-//            break;
-
-//        }
     }
     cout << '\n';
 }
-void cMillionaireDisplaying::DisplayColoredAnswer(char answer)
+void cMillionaireDisplaying::DisplayColoredAnswer(const char answer)
 {
     HANDLE hOut;
     hOut = GetStdHandle( STD_OUTPUT_HANDLE );
@@ -105,7 +83,7 @@ void cMillionaireDisplaying::DisplayColoredAnswer(char answer)
         switch(i)
         {
         case 2:
-            if(vData[stage][selectedQuestion][COL_COUNT-1]=="1")
+            if(vData[stage][selectedQuestion]["CORRECT_ANSWER"]=="1")
             {
                 SetConsoleTextAttribute( hOut, FOREGROUND_GREEN );
             }
@@ -118,11 +96,11 @@ void cMillionaireDisplaying::DisplayColoredAnswer(char answer)
 
                 break;
         case 3:
-            if(vData[stage][selectedQuestion][COL_COUNT-1]=="2")
+            if(vData[stage][selectedQuestion]["CORRECT_ANSWER"]=="2")
             {
                 SetConsoleTextAttribute( hOut, FOREGROUND_GREEN );
             }
-            else if(!(vData[stage][selectedQuestion][COL_COUNT-1]=="2")&&(answer=='b'||answer=='B'))
+            else if(!(vData[stage][selectedQuestion]["CORRECT_ANSWER"]=="2")&&(answer=='b'||answer=='B'))
             {
                 SetConsoleTextAttribute( hOut, FOREGROUND_RED );
             }
@@ -131,11 +109,11 @@ void cMillionaireDisplaying::DisplayColoredAnswer(char answer)
             break;
 
         case 4:
-            if(vData[stage][selectedQuestion][COL_COUNT-1]=="3")
+            if(vData[stage][selectedQuestion]["CORRECT_ANSWER"]=="3")
             {
                 SetConsoleTextAttribute( hOut, FOREGROUND_GREEN );
             }
-            else if(!(vData[stage][selectedQuestion][COL_COUNT-1]=="3")&&(answer=='c'||answer=='C'))
+            else if(!(vData[stage][selectedQuestion]["CORRECT_ANSWER"]=="3")&&(answer=='c'||answer=='C'))
             {
                 SetConsoleTextAttribute( hOut, FOREGROUND_RED );
             }
@@ -144,11 +122,11 @@ void cMillionaireDisplaying::DisplayColoredAnswer(char answer)
             break;
 
         default:
-            if(vData[stage][selectedQuestion][COL_COUNT-1]=="4")
+            if(vData[stage][selectedQuestion]["CORRECT_ANSWER"]=="4")
             {
                 SetConsoleTextAttribute( hOut, FOREGROUND_GREEN );
             }
-            else if(!(vData[stage][selectedQuestion][COL_COUNT-1]=="4")&&(answer=='d'||answer=='D'))
+            else if(!(vData[stage][selectedQuestion]["CORRECT_ANSWER"]=="4")&&(answer=='d'||answer=='D'))
             {
                 SetConsoleTextAttribute( hOut, FOREGROUND_RED );
             }
@@ -161,11 +139,10 @@ void cMillionaireDisplaying::DisplayColoredAnswer(char answer)
 }
 
 
-void cMillionaireDisplaying::clearScreen()
+void cMillionaireDisplaying::ClearScreen()
 {
 #if defined _WIN32
     system("cls");
-    //clrscr(); // including header file : conio.h
 #elif defined (__LINUX__) || defined(__gnu_linux__) || defined(__linux__)
     system("clear");
 #elif defined (__APPLE__)
@@ -184,44 +161,40 @@ int cMillionaireDisplaying::GameFlow()
 
         do
         {
-            clearScreen();
+            ClearScreen();
 
             cout << "*ETAP* "<< stage + 1 << '\n';
             if (0 < stage)
             {
                 cout << "Masz ";
-                colorTxt(stagePrize[stage] + "$\n", 0x02);
+                ColorTxt(stagePrize[stage] + "$\n", 0x02);
             }
             cout << "Grasz o ";
-            colorTxt(stagePrize[stage+1] + "$\n", 0x04);
+            ColorTxt(stagePrize[stage+1] + "$\n", 0x04);
 
-            enableBuoy( bType);
+            EnableBuoy( bType);
             DisplayBuoyMenu();
             DisplayQuestion();
             DisplayAnswer();
 
             bType = buoyType(EnterAnswer());
 
-        }
-        while (bType != b_none);
+        } while (bType != b_none);
 
-        //millionaireGame.DisplayQuestion(i);
-        // millionaireGame.DisplayAnswer(i,answer);
         if(!CheckingAnswer())
         {
 
             cout << "\nPrzegrałeś. Udało ci się dojść do "<<stage+1<<" etapu!"<<endl;
             cout << "Twoja nagroda to: ";
-            colorTxt(stagePrize[stage] + "$\n", 0x0A);
+            ColorTxt(stagePrize[stage] + "$\n", 0x0A);
             break;
         }
-        // getchar();
 
         if(stage==STAGE_COUNT-1)
         {
             cout<<"\nPOPRAWNA ODPOWIEDŹ!\nJESTEŚ ZWYCIĘZCĄ!\n";
             cout << "$ NAGRODA $\n";
-            colorTxt(stagePrize[stage+1], 0x0E);
+            ColorTxt(stagePrize[stage+1], 0x0E);
             getline(cin,next,'\n');
             break;
         }
@@ -229,12 +202,12 @@ int cMillionaireDisplaying::GameFlow()
         {
             cout<<"\nPOPRAWNA ODPOWIEDŹ!\nMasz juz w kieszeni " << stagePrize[stage+1] << "$\nAby przejść do "<<stage+2<<" etapu naciśnij ENTER.";
             getline(cin,next,'\n');
-            clearScreen();
+            ClearScreen();
         }
 
         cout<<endl;
 
-        resetAccessFlags(1);
+        ResetAccessFlags(1);
     }
     return 0;
 }
@@ -244,20 +217,20 @@ void cMillionaireDisplaying::DisplayBuoyMenu()
     cout << "\t\t\t*        KOŁA RATUNKOWE       *\n";
     cout << "\t\t\t*-----------------------------*\n";
     cout << "\t\t\t| 1. ";
-    colorTxt(        "50/50", IsBuoyAvailable[b_50_50] ? 0x0F : 0x04);
+    ColorTxt(        "50/50", IsBuoyAvailable[b_50_50] ? 0x0F : 0x04);
     cout <<               "                    |\n";
     cout << "\t\t\t| 2. ";
-    colorTxt(        "Telefon do przyjaciela", IsBuoyAvailable[b_friend] ? 0x0F : 0x04);
+    ColorTxt(        "Telefon do przyjaciela", IsBuoyAvailable[b_friend] ? 0x0F : 0x04);
     cout <<                                "   |\n";
     cout << "\t\t\t| 3. ";
-    colorTxt(        "Pytanie do publiczności", IsBuoyAvailable[b_audience] ? 0x0F : 0x04);
+    ColorTxt(        "Pytanie do publiczności", IsBuoyAvailable[b_audience] ? 0x0F : 0x04);
     cout <<                                 "  |\n";
     cout << "\t\t\t*-----------------------------*\n";
     cout << "\t\t\t*Wybranie 1/2/3 to użycie koła*\n\n";
 
 }
 
-void cMillionaireDisplaying::enableBuoy(buoyType bType)
+void cMillionaireDisplaying::EnableBuoy(const buoyType bType)
 {
     static int currentStage = -1;
     static list<funDef> funList;
@@ -274,7 +247,7 @@ void cMillionaireDisplaying::enableBuoy(buoyType bType)
             if (IsBuoyAvailable[b_50_50])
             {
                 IsBuoyAvailable[b_50_50] = 0;
-                Buoy_50_50();
+                Buoy50_50();
             }
             break;
         }
@@ -283,26 +256,18 @@ void cMillionaireDisplaying::enableBuoy(buoyType bType)
             if (IsBuoyAvailable[b_friend])
             {
                 IsBuoyAvailable[b_friend] = 0;
-                loadFriendCall();
-                funList.push_front(&cMillionaireDisplaying::Buoy_Friend_Display);
+                LoadFriendCall();
+                funList.push_front(&cMillionaireDisplaying::BuoyFriendDisplay);
             }
-//            else if(currentStage == stage)
-//            {
-//                funStack.push(&cMillionaireDisplaying::Buoy_Friend_Display);
-//            }
             break;
         }
         case b_audience: {
             if (IsBuoyAvailable[b_audience])
             {
                 IsBuoyAvailable[b_audience] = 0;
-                Buoy_Audience();
-                funList.push_front(&cMillionaireDisplaying::Buoy_Audience_Display);
+                BuoyAudience();
+                funList.push_front(&cMillionaireDisplaying::BuoyAudienceDisplay);
             }
-//            else if(currentStage==stage)
-//            {
-//                funStack.push(&cMillionaireDisplaying::Buoy_Audience_Display);
-//            }
             break;
         }
          case b_none:{
@@ -318,9 +283,9 @@ void cMillionaireDisplaying::enableBuoy(buoyType bType)
     currentStage = stage;
 }
 
-void cMillionaireDisplaying::Buoy_50_50()
+void cMillionaireDisplaying::Buoy50_50()
 {
-    resetAccessFlags(0);
+    ResetAccessFlags(0);
 
     string correctAnswer = vData[stage][selectedQuestion]["CORRECT_ANSWER"];
     int Ans1 = stoi(correctAnswer) - 1, Ans2;
@@ -336,9 +301,8 @@ void cMillionaireDisplaying::Buoy_50_50()
     // Ans1 <- correct, Ans2 <- random
 }
 
-void cMillionaireDisplaying::Buoy_Audience()
+void cMillionaireDisplaying::BuoyAudience()
 {
-
     int Ans;
     int index=stoi(vData[stage][selectedQuestion]["CORRECT_ANSWER"])-1;
     Votes[index]=rand()%51+50;
@@ -350,13 +314,12 @@ void cMillionaireDisplaying::Buoy_Audience()
 
         }while(!IsAnswerAvailable[Ans] || Ans==index);
         Votes[Ans]++;
-
     }
 }
 
-void cMillionaireDisplaying::Buoy_Audience_Display()
+void cMillionaireDisplaying::BuoyAudienceDisplay()
 {
-    colorTxt("\nPytanie do publiczności...", 0x06);
+    ColorTxt("\nPytanie do publiczności...", 0x06);
 
     cout<<"\nA."<<Votes[0]<<"%";
     if(Votes[0]<10)
@@ -405,13 +368,13 @@ void cMillionaireDisplaying::Buoy_Audience_Display()
     cout<<"\n\n";
 }
 
-void cMillionaireDisplaying::Buoy_Friend_Display()
+void cMillionaireDisplaying::BuoyFriendDisplay()
 {
-    colorTxt("\nTelefon do przyjaciela...\n", 0x06);
+    ColorTxt("\nTelefon do przyjaciela...\n", 0x06);
     cout<<friendCall<< "\n\n";
 }
 
-void cMillionaireDisplaying::colorTxt(const string& Txt, uint1 color)
+void cMillionaireDisplaying::ColorTxt(const string& Txt, const uint1 color)
 {
     HANDLE hOut;
     hOut = GetStdHandle( STD_OUTPUT_HANDLE );

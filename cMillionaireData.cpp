@@ -5,12 +5,12 @@
 
 const char cMillionaire::COMMA = ',';
 
-bool cMillionaire::loadData()
+bool cMillionaire::LoadData()
 {
     // Returns: false if OK
     try
     {
-        readFile();
+        ReadFile();
     }
     catch(const logic_error& lError)
     {
@@ -21,13 +21,12 @@ bool cMillionaire::loadData()
     return false;
 }
 
-// Blank function
-bool cMillionaire::loadFriendCall()
+bool cMillionaire::LoadFriendCall()
 {
     // Returns: false if OK
     try
     {
-        readFriendCall();
+        ReadFriendCall();
     }
     catch(const logic_error& lError)
     {
@@ -38,7 +37,7 @@ bool cMillionaire::loadFriendCall()
     return false;
 }
 
-void cMillionaire::readFriendCall()
+void cMillionaire::ReadFriendCall()
 {
 
     ifstream file;
@@ -53,25 +52,17 @@ void cMillionaire::readFriendCall()
         throw logic_error("Problem z otwarciem pliku: " + folder);
     }
 
-    // Nothing
-//    if(stage==-1)
-//    {
-//        return;
-//    }
-
-    int response=rand()%Num_Friend_Answer*2+2;
+    int response=rand()%NUM_FRIEND_ANSWER*2+2;
     string line{};
     int lineNumber=1;
     while(getline(file, line) && lineNumber!=response)
     {
         friendCall=line;
-
         lineNumber++;
     }
 
     string correctAns;
     if(stage<5)
-
     {
         if(vData[stage][selectedQuestion]["CORRECT_ANSWER"]=="1")
         {
@@ -125,19 +116,15 @@ void cMillionaire::readFriendCall()
 
         }
     }
+
     friendCall=friendCall + correctAns + line;
-
-
     file.close();
-
-
-
 }
 
-void cMillionaire::readFile()
+void cMillionaire::ReadFile()
 {
-    ifstream file; // Domyslnie ustawiona zmienna do odczytu
-    const string folder = "../project_07_35244/stages/", extension = ".csv";  // <---------- ZMIENIC FOLDER - po clone bedzie inna nazwa
+    ifstream file;
+    const string folder = "../project_07_35244/stages/", extension = ".csv";
     string fPath{};
 
     for (unsigned i = 0, fileNum = 1; i < STAGE_COUNT; i++, fileNum++)
@@ -154,32 +141,36 @@ void cMillionaire::readFile()
 
         string line{};
         getline(file, line);
-        if (!headerIsGood(line))
+        if (!HeaderIsGood(line))
+        {
             throw logic_error("Blad w naglowku: " + fPath);
+        }
 
         while(getline(file, line))
         {
-            saveLine(line, vData[i]);
+            SaveLine(line, vData[i]);
         }
 
         file.close();
-
     }
-
 }
 
-bool cMillionaire::headerIsGood(string line)
+bool cMillionaire::HeaderIsGood(string line)
 {
     const int COMMA_COUNT = 6;
 
     if (count(line.begin(), line.end(), COMMA) != COMMA_COUNT)
+    {
         return false;
+    }
 
     for (int i = 0; i < COL_COUNT; i++)
     {
         string shortLine = line.substr(0, line.find_first_of(COMMA));
         if (shortLine != H_TXT[i])
+        {
             return false;
+        }
 
         line.erase(0, shortLine.length() + 1); // + 1 beacuse of comma
     }
@@ -187,7 +178,7 @@ bool cMillionaire::headerIsGood(string line)
     return true;
 }
 
-void cMillionaire::saveLine(string line, vector<stageData>& vData)
+void cMillionaire::SaveLine(string line, vector<stageData>& vData)
 {
     char sign{};
     bool isQuotePresent = 0;
@@ -206,34 +197,11 @@ void cMillionaire::saveLine(string line, vector<stageData>& vData)
         }
 
         string shortLine = line.substr(isQuotePresent, line.find(sign, isQuotePresent) - isQuotePresent); // substr(odkąd, ile_znakow)
-        // DEBUG
-        // cout << line << "  FIND( '"<< sign << "', " << isQuotePresent << " ) -> "<< line.find(sign, isQuotePresent) << '\n';
-        // cout << shortLine << '\n';
-        // vData.emplace_back( pair<string, string>(H_TXT[i], shortLine));
 
         vData.back()[i] = shortLine;
 
         line.erase(0, shortLine.length() + 1 + 2 * isQuotePresent); // + 1 (comma) + 2 * isQuotePresent (quotes)
         // erase(odkad_lacznie, ile_znakow)
-    }
-}
-
-void cMillionaire::printStageContent()
-{
-    for (int etap = 0; etap < STAGE_COUNT; etap++)
-    {
-        cout << "Etap: " << etap + 1 << '\n';
-        for (int linia = 0; linia < vData[etap].size(); linia++)
-        {
-            // Mozna tez
-            //cout << vData[etap][linia]["question"];
-            for (int naglowek = 0; naglowek < COL_COUNT; naglowek++)
-            {
-                cout << vData[etap][linia][naglowek] << "  ";
-            }
-            cout << '\n';
-        }
-
     }
 }
 

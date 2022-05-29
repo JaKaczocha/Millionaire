@@ -9,23 +9,27 @@ typedef void (cMillionaireDisplaying::*funDef)();
 
 class cMillionaireDisplaying: public cMillionaire
 {
-
 public:
     cMillionaireDisplaying();
     int GameFlow();
+    void ClearScreen();
+
+private:
     int EnterAnswer();
+
     void DisplayQuestion();
     void DisplayAnswer();
-    void DisplayColoredAnswer(char);
-    void clearScreen();
-    void colorTxt(const string& Txt, uint1 color);
+    void DisplayColoredAnswer(const char answer);
+
+    void ColorTxt(const string& Txt, const uint1 color);
+
+    void EnableBuoy(const buoyType bType);
+    void Buoy50_50();
+    void BuoyAudience();
 
     void DisplayBuoyMenu();
-    void enableBuoy(buoyType);
-    void Buoy_50_50();
-    void Buoy_Audience();
-    void Buoy_Audience_Display();
-    void Buoy_Friend_Display();
+    void BuoyAudienceDisplay();
+    void BuoyFriendDisplay();
 
     int Votes[4]{0};
     const string stagePrize[STAGE_COUNT + 1];

@@ -9,12 +9,16 @@ std::string& stageData::operator[](const std::string& key)
 {
     nKey="";
     for (int i = 0; key[i]; i++)
+    {
         nKey += toupper(key[i]);
+    }
 
     for (int i = 0; i < COL_COUNT; i++)
     {
         if (nKey == H_TXT[i])
+        {
             return headerData[i];
+        }
     }
 
     // Returns given key if not found any match.

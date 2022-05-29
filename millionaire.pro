@@ -7,10 +7,10 @@ SOURCES += \
         cMillionaire.cpp \
         cMillionaireData.cpp \
         cStageData.cpp \
-        cmillionairedisplaying.cpp \
+        cMillionaireDisplaying.cpp \
         main.cpp
 
 HEADERS += \
     cMillionaire.h \
     cStageData.h \
-    cmillionairedisplaying.h
+    cMillionaireDisplaying.h

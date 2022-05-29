@@ -1,7 +1,5 @@
 #include "cMillionaire.h"
 
-
-
 cMillionaire::cMillionaire()
     : stage(0), IsAnswerAvailable{1, 1, 1, 1}, IsBuoyAvailable{1, 1, 1, 1}
 {
@@ -9,7 +7,9 @@ cMillionaire::cMillionaire()
     const unsigned int MIN_QUEST_COUNT = 10;
 
     for (unsigned i = 0; i < STAGE_COUNT; i++)
+    {
         vData[i].reserve(MIN_QUEST_COUNT);
+    }
 }
 
 bool cMillionaire::CheckingAnswer()
@@ -37,13 +37,12 @@ bool cMillionaire::CheckingAnswer()
 
 }
 
-
 void cMillionaire::SelectQuestion()
 {
     selectedQuestion = rand()%vData[stage].size();
 }
 
-void cMillionaire::resetAccessFlags(const bool val)
+void cMillionaire::ResetAccessFlags(const bool val)
 {
     for (auto& flag : IsAnswerAvailable)
     {

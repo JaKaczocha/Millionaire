@@ -1,7 +1,7 @@
 #ifndef CSTAGEDATA_H
 #define CSTAGEDATA_H
 
-#include <iostream>
+#include <string>
 
 class stageData
 {
