@@ -22,8 +22,8 @@ public:
     bool loadData();
     bool loadFriendCall();
     void printStageContent();
-    void SelectQuestion(int );
-    bool CheckingAnswer(int);
+    void SelectQuestion();
+    bool CheckingAnswer();
 
 private:
     static const int STAGE_COUNT = 15;
@@ -35,6 +35,7 @@ private:
 
     vector<stageData> vData[STAGE_COUNT]; // <- Main data structure
 
+    int stage;
     int selectedQuestion; //.
     char answer;//.
     bool IsAnswerAvailable[ANSWER_COUNT];
@@ -44,7 +45,7 @@ private:
     void resetAccessFlags(const bool val);
 
     void readFile();
-    void readFriendCall(int);
+    void readFriendCall();
     bool headerIsGood(string line);
     void saveLine(string line, vector<stageData>& vData);
 

@@ -21,12 +21,13 @@ bool cMillionaire::loadData()
     return false;
 }
 
+// Blank function
 bool cMillionaire::loadFriendCall()
 {
     // Returns: false if OK
     try
     {
-        readFriendCall(-1);
+        readFriendCall();
     }
     catch(const logic_error& lError)
     {
@@ -37,7 +38,7 @@ bool cMillionaire::loadFriendCall()
     return false;
 }
 
-void cMillionaire::readFriendCall(int stage)
+void cMillionaire::readFriendCall()
 {
 
     ifstream file;
@@ -52,10 +53,11 @@ void cMillionaire::readFriendCall(int stage)
         throw logic_error("Problem z otwarciem pliku: " + folder);
     }
 
-    if(stage==-1)
-    {
-        return;
-    }
+    // Nothing
+//    if(stage==-1)
+//    {
+//        return;
+//    }
 
     int response=rand()%Num_Friend_Answer*2+2;
     string line{};

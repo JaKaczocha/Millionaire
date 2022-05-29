@@ -9,8 +9,9 @@ int main()
     if (millionaireGame.loadData())
         return 1;
 
-    if (millionaireGame.loadFriendCall())
-        return 1;
+    // Blank
+    //if (millionaireGame.loadFriendCall())
+        //return 1;
 
     millionaireGame.clearScreen();
 

@@ -3,7 +3,7 @@
 
 
 cMillionaire::cMillionaire()
-    : IsAnswerAvailable{1, 1, 1, 1}, IsBuoyAvailable{1, 1, 1, 1}
+    : stage(0), IsAnswerAvailable{1, 1, 1, 1}, IsBuoyAvailable{1, 1, 1, 1}
 {
 
     const unsigned int MIN_QUEST_COUNT = 10;
@@ -12,7 +12,7 @@ cMillionaire::cMillionaire()
         vData[i].reserve(MIN_QUEST_COUNT);
 }
 
-bool cMillionaire::CheckingAnswer(int stage)
+bool cMillionaire::CheckingAnswer()
 {
     if((answer=='a'||answer=='A')&&vData[stage][selectedQuestion]["CORRECT_ANSWER"]=="1")
     {
@@ -38,7 +38,7 @@ bool cMillionaire::CheckingAnswer(int stage)
 }
 
 
-void cMillionaire::SelectQuestion(int stage)
+void cMillionaire::SelectQuestion()
 {
     selectedQuestion = rand()%vData[stage].size();
 }

@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <cstdio>
 #include <ctime>
+#include <list>
 
 static inline int ctoi(const char c)
 {
@@ -15,7 +16,7 @@ static inline int ctoi(const char c)
 
 cMillionaireDisplaying::cMillionaireDisplaying() {}
 
-int cMillionaireDisplaying::EnterAnswer(int stage)
+int cMillionaireDisplaying::EnterAnswer()
 {
     do
     {
@@ -35,12 +36,12 @@ int cMillionaireDisplaying::EnterAnswer(int stage)
     cout<<"*ETAP* "<<stage+1 << '\n';
 
     DisplayBuoyMenu();
-    DisplayQuestion(stage);
-    DisplayColoredAnswer(stage,answer);
+    DisplayQuestion();
+    DisplayColoredAnswer(answer);
 
     return b_none;
 }
-void cMillionaireDisplaying::DisplayQuestion(int stage)
+void cMillionaireDisplaying::DisplayQuestion()
 {
     HANDLE hOut;
     hOut = GetStdHandle( STD_OUTPUT_HANDLE );
@@ -48,7 +49,7 @@ void cMillionaireDisplaying::DisplayQuestion(int stage)
     cout<< vData[stage][selectedQuestion]["QUESTION"] <<endl;
 }
 
-void cMillionaireDisplaying::DisplayAnswer(int stage)
+void cMillionaireDisplaying::DisplayAnswer()
 {
     char ansChar = 'A';
     HANDLE hOut;
@@ -89,7 +90,7 @@ void cMillionaireDisplaying::DisplayAnswer(int stage)
     }
     cout << '\n';
 }
-void cMillionaireDisplaying::DisplayColoredAnswer(int stage,char answer)
+void cMillionaireDisplaying::DisplayColoredAnswer(char answer)
 {
     HANDLE hOut;
     hOut = GetStdHandle( STD_OUTPUT_HANDLE );
@@ -170,41 +171,41 @@ void cMillionaireDisplaying::clearScreen()
 }
 int cMillionaireDisplaying::GameFlow()
 {
-    srand( time( NULL ) );
+    srand( static_cast<unsigned int>(time( NULL )));
     string next;
 
-    for(int i=0;i<STAGE_COUNT;i++)
+    for(;this->stage<STAGE_COUNT;this->stage++)
     {
-        SelectQuestion(i);
+        SelectQuestion();
 
         buoyType bType = b_none;
         do
         {
             clearScreen();
 
-            cout<<"*ETAP* "<<i+1<<endl;
+            cout<<"*ETAP* "<<stage+1<<endl;
 
-            enableBuoy(i, bType);
+            enableBuoy( bType);
             DisplayBuoyMenu();
-            DisplayQuestion(i);
-            DisplayAnswer(i);
+            DisplayQuestion();
+            DisplayAnswer();
 
-            bType = buoyType(EnterAnswer(i));
+            bType = buoyType(EnterAnswer());
 
         }
         while (bType != b_none);
 
         //millionaireGame.DisplayQuestion(i);
         // millionaireGame.DisplayAnswer(i,answer);
-        if(!CheckingAnswer(i))
+        if(!CheckingAnswer())
         {
 
-            cout<<"Przegrałeś. Udało ci się dojść do "<<i+1<<" etapu!"<<endl;
+            cout<<"Przegrałeś. Udało ci się dojść do "<<stage+1<<" etapu!"<<endl;
             break;
         }
         // getchar();
 
-        if(i==STAGE_COUNT-1)
+        if(stage==STAGE_COUNT-1)
         {
             cout<<"\nPOPRAWNA ODPOWIEDŹ!\nJESTEŚ ZWYCIĘZCĄ!\n";
             getline(cin,next,'\n');
@@ -212,7 +213,7 @@ int cMillionaireDisplaying::GameFlow()
         }
         else
         {
-            cout<<"\nPOPRAWNA ODPOWIEDŹ!\nAby przejść do "<<i+2<<" etapu naciśnij ENTER.";
+            cout<<"\nPOPRAWNA ODPOWIEDŹ!\nAby przejść do "<<stage+2<<" etapu naciśnij ENTER.";
             getline(cin,next,'\n');
             clearScreen();
         }
@@ -242,53 +243,68 @@ void cMillionaireDisplaying::DisplayBuoyMenu()
 
 }
 
-void cMillionaireDisplaying::enableBuoy(const int stage, buoyType bType)
+void cMillionaireDisplaying::enableBuoy(buoyType bType)
 {
+    static int currentStage = -1;
+    static list<funDef> funList;
+
+    // Delete all list elements if stage has changed
+    if (currentStage != stage)
+    {
+        funList.clear();
+    }
+
     switch(bType)
     {
-    case b_50_50: {
-        if (IsBuoyAvailable[b_50_50])
-        {
-            IsBuoyAvailable[b_50_50] = 0;
-            Buoy_50_50(stage);
+        case b_50_50: {
+            if (IsBuoyAvailable[b_50_50])
+            {
+                IsBuoyAvailable[b_50_50] = 0;
+                Buoy_50_50();
+            }
+            break;
         }
-        break;
-    }
-    case b_friend: {
+        case b_friend: {
 
-        if (IsBuoyAvailable[b_friend])
-        {
-            IsBuoyAvailable[b_friend] = 0;
-            readFriendCall(stage);
-            cout<<friendCall<<endl;
+            if (IsBuoyAvailable[b_friend])
+            {
+                IsBuoyAvailable[b_friend] = 0;
+                loadFriendCall();
+                funList.push_front(&cMillionaireDisplaying::Buoy_Friend_Display);
+            }
+//            else if(currentStage == stage)
+//            {
+//                funStack.push(&cMillionaireDisplaying::Buoy_Friend_Display);
+//            }
+            break;
         }
-        else if(whenFriend==stage)
-        {
-            cout<<friendCall<<endl;
+        case b_audience: {
+            if (IsBuoyAvailable[b_audience])
+            {
+                IsBuoyAvailable[b_audience] = 0;
+                Buoy_Audience();
+                funList.push_front(&cMillionaireDisplaying::Buoy_Audience_Display);
+            }
+//            else if(currentStage==stage)
+//            {
+//                funStack.push(&cMillionaireDisplaying::Buoy_Audience_Display);
+//            }
+            break;
         }
-        break;
-    }
-    case b_audience: {
-        if (IsBuoyAvailable[b_audience])
-        {
-            IsBuoyAvailable[b_audience] = 0;
-            Buoy_Audience(stage);
+         case b_none:{
+            return;
+            break;
         }
-        else if(whenAudience==stage)
-        {
-            Buoy_Audience_Display();
-        }
-        break;
     }
-     case b_none:{
-        return;
-        break;
+    // Call every function in list
+    for (list<funDef>::iterator iter = funList.begin(); iter != funList.end(); iter++)
+    {
+        (this->*(*iter))(); // iter is pointer to function pointer
     }
-
-    }
+    currentStage = stage;
 }
 
-void cMillionaireDisplaying::Buoy_50_50(const int stage)
+void cMillionaireDisplaying::Buoy_50_50()
 {
     resetAccessFlags(0);
 
@@ -306,9 +322,8 @@ void cMillionaireDisplaying::Buoy_50_50(const int stage)
     // Ans1 <- correct, Ans2 <- random
 }
 
-void cMillionaireDisplaying::Buoy_Audience(int stage)
+void cMillionaireDisplaying::Buoy_Audience()
 {
-    whenAudience=stage;
 
     int Ans;
     int index=stoi(vData[stage][selectedQuestion]["CORRECT_ANSWER"])-1;
@@ -323,7 +338,6 @@ void cMillionaireDisplaying::Buoy_Audience(int stage)
         Votes[Ans]++;
 
     }
-    Buoy_Audience_Display();
 }
 
 void cMillionaireDisplaying::Buoy_Audience_Display()
@@ -374,6 +388,12 @@ void cMillionaireDisplaying::Buoy_Audience_Display()
 
     cout<<"\n\n";
 }
+
+void cMillionaireDisplaying::Buoy_Friend_Display()
+{
+    cout<<friendCall<<endl;
+}
+
 void cMillionaireDisplaying::colorTxt(const string& Txt, uint1 color)
 {
     HANDLE hOut;

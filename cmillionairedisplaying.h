@@ -5,28 +5,28 @@
 #include "cMillionaire.h"
 
 typedef unsigned char uint1;
+typedef void (cMillionaireDisplaying::*funDef)();
 
 class cMillionaireDisplaying: public cMillionaire
 {
 
 public:
     cMillionaireDisplaying();
-    int GameFlow();//transitional place
-    int EnterAnswer(int);//transitional place
-    void DisplayQuestion(int);
-    void DisplayAnswer(int);
-    void DisplayColoredAnswer(int,char);
+    int GameFlow();
+    int EnterAnswer();
+    void DisplayQuestion();
+    void DisplayAnswer();
+    void DisplayColoredAnswer(char);
     void clearScreen();
     void colorTxt(const string& Txt, uint1 color);
 
     void DisplayBuoyMenu();
-    void enableBuoy(const int, buoyType);
-    void Buoy_50_50(const int);
-    void Buoy_Audience(int);
+    void enableBuoy(buoyType);
+    void Buoy_50_50();
+    void Buoy_Audience();
     void Buoy_Audience_Display();
+    void Buoy_Friend_Display();
 
-    int whenAudience;
-    int whenFriend;
     int Votes[4]{0};
 };
 
