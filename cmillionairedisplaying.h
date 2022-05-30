@@ -4,6 +4,8 @@
 #include "cStageData.h"
 #include "cMillionaire.h"
 
+class cMillionaireDisplaying;
+
 typedef unsigned char uint1;
 typedef void (cMillionaireDisplaying::*funDef)();
 
@@ -34,5 +36,6 @@ private:
     int Votes[4]{0};
     const string stagePrize[STAGE_COUNT + 1];
 };
+
 
 #endif // CMILLIONAIREDISPLAYING_H
