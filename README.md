@@ -1,7 +1,7 @@
 # Milionerzy
-Aplikacja symulujące popularną grę Milionerzy.
+Aplikacja symulująca grę Milionerzy.
 
-### Jak grać
+## Jak grać
 
 ***
 
@@ -9,7 +9,6 @@ Aplikacja symulujące popularną grę Milionerzy.
 
 ***
 
-Opis gry  
 Celem gry jest podanie poprawnej odpowiedzi w każdym z 15 etapów i zostanie milionerem.   
 Każdemu etapowi odpowiada jedno pytanie do którego musimy dopasować jedną z 4 odpowiedzi.  
 W wyborze odpowiedzi pomóc nam mogą 3 koła ratunkowe.  
@@ -55,6 +54,8 @@ Gracz podając odpowiedź ma 7 opcji.
 * Środowisko Qt Creator
     * MSVC 2019 compiler
     * CDB debugger
+* System kontroli wersji GIT
+* Zdalne repozytorium BitBucket
 
 ## Twórcy oraz podział obowiązków
 |Dawid Wołek|Jakub Kaczocha|
