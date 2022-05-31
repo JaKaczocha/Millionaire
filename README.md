@@ -2,8 +2,14 @@
 Krótki wstęp
 
 ### Jak grać
-Gra się tak i tak
+
+***
+
 ![GIF](doc/screens/demo_game.gif)
+
+***
+
+Opis gry
 
 ## Struktura plików aplikacji
 ...
@@ -12,15 +18,15 @@ Gra się tak i tak
 **Języki**
 
 * C++
-  * Logika i interfejs aplikacji
+    * Logika i interfejs aplikacji
 * Python - _numpy_, _pandas_
     * Tworzenie oraz edycja plików z pytaniami .csv
 
 **Narzędzia**
 
 * Środowisko Qt Creator
-  * MSVC 2019 compiler
-  * CDB debugger
+    * MSVC 2019 compiler
+    * CDB debugger
 
 ## Twórcy oraz podział obowiązków
 |Dawid Wołek|Jakub Kaczocha|
