@@ -10,14 +10,17 @@ Gra się tak i tak
 
 ## Narzędzia użyte przy tworzeniu projektu
 **Języki**
-- C++ 
-  - Logika i interfejs aplikacji
-- Python - moduły _numpy_, _pandas_
-  - Tworzenie oraz edycja plików .csv
+
+* C++
+  * Logika i interfejs aplikacji
+* Python - _numpy_, _pandas_
+    * Tworzenie oraz edycja plików z pytaniami .csv
+
 **Narzędzia**
-- Środowisko Qt Creator
-  - MSVC 2019 compiler
-  - CDB debugger
+
+* Środowisko Qt Creator
+  * MSVC 2019 compiler
+  * CDB debugger
 
 ## Twórcy oraz podział obowiązków
 |Dawid Wołek|Jakub Kaczocha|
