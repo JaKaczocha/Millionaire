@@ -1,5 +1,5 @@
 # Milionerzy
-Krótki wstęp
+Aplikacja symulujące popularną grę Milionerzy.
 
 ### Jak grać
 
@@ -35,7 +35,12 @@ Gracz podając odpowiedź ma 7 opcji.
     * możliwe tylko raz na grę
 
 ## Struktura plików aplikacji
-...
+
+* build.../ - ** Tworzony tylko po kompilacji projektu **
+* bin/ - Ostatnio skompilowany plik wykonywalny
+* doc/ - Pliki używane do dokumentacji projektu
+* data/ - Dane używane w aplikacji
+* src/ - Pliki źródłowe oraz nagłówkowe
 
 ## Narzędzia użyte przy tworzeniu projektu
 **Języki**
@@ -54,13 +59,13 @@ Gracz podając odpowiedź ma 7 opcji.
 ## Twórcy oraz podział obowiązków
 |Dawid Wołek|Jakub Kaczocha|
 |-----------|--------------|
-|-...|- 8 plików .csv|
-|-...|- Wyswietlanie pytania|
-|-...|- Wyświetlanie odpowiedzi|
-|-...|- Wybór odpowiedzi|
-|-...|- Weryfikacja odpowiedzi|
-|-...|- Telefon do przyjaciela|
-|-...|- Pytanie do publiczności|
-|-...|- Szkielet gry na etapie bez kół ratunkowych|
+|- 7 plików .csv|- 8 plików .csv|
+|- Wczytywanie pytań z plików .csv|- Wyswietlanie pytania|
+|- Obsługa błędów wczytywanych danych|- Wyświetlanie odpowiedzi|
+|- Koło ratunkowe 50/50|- Wybór odpowiedzi|
+|- Logika związana z blokowaniem kół w grze i danych etapach|- Weryfikacja odpowiedzi, zabezpieczanie wejścia użytkownika|
+|- Interfejs kół ratunkowych|- Telefon do przyjaciela|
+|- Ujednolicenie kodu i struktury plików projketu|- Pytanie do publiczności|
+|- Struktura README|- Szkielet gry na etapie bez kół ratunkowych|
 
 
