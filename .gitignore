@@ -95,7 +95,7 @@ Thumbs.db
 
 # Applications
 *.app
-*.exe
+millionaire.exe
 *.war
 
 # Large media files
