@@ -41,7 +41,7 @@ void cMillionaire::ReadFriendCall()
 {
 
     ifstream file;
-    const string folder = "../project_07_35244/data/friendCall/response.txt";
+    const string folder = "../data/friendCall/response.txt";
     string fPath{};
 
     file.open(folder,ios::in);
@@ -124,7 +124,7 @@ void cMillionaire::ReadFriendCall()
 void cMillionaire::ReadFile()
 {
     ifstream file;
-    const string folder = "../project_07_35244/data/stages/", extension = ".csv";
+    const string folder = "../data/stages/", extension = ".csv";
     string fPath{};
 
     for (unsigned i = 0, fileNum = 1; i < STAGE_COUNT; i++, fileNum++)
