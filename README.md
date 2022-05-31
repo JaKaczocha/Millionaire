@@ -54,5 +54,13 @@ Gracz podając odpowiedź ma 7 opcji.
 ## Twórcy oraz podział obowiązków
 |Dawid Wołek|Jakub Kaczocha|
 |-----------|--------------|
-|-...|-...|
+|-...|- 8 plików .csv|
+|-...|- Wyswietlanie pytania|
+|-...|- Wyświetlanie odpowiedzi|
+|-...|- Wybór odpowiedzi|
+|-...|- Weryfikacja odpowiedzi|
+|-...|- Telefon do przyjaciela|
+|-...|- Pytanie do publiczności|
+|-...|- Szkielet gry na etapie bez kół ratunkowych|
+
 
